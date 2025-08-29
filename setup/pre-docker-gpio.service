@@ -1,0 +1,13 @@
+[Unit]
+Description=Set GPIO86 low before starting Docker
+Before=docker.service
+Wants=docker.service
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/init_4g_module.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

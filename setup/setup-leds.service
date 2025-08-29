@@ -1,0 +1,11 @@
+[Unit]
+Description=Setup LED indicators for network interface
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/setup_leds.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

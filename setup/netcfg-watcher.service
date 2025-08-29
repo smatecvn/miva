@@ -1,0 +1,11 @@
+[Unit]
+Description=Netplan dynamic config watcher
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/netcfg-watcher.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target

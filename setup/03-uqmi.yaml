@@ -1,0 +1,9 @@
+network:
+  version: 2
+  renderer: NetworkManager
+  modems:
+    cdc-wdm0:
+      apn: m-wap
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 200

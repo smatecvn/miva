@@ -1,0 +1,35 @@
+#version: "3.9"
+
+services:
+  miva:
+    image: sonnh911/miva:${TAG}
+    container_name: miva
+    hostname: MIVA
+    restart: unless-stopped
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - NET_RAW
+      - SYSLOG
+    security_opt:
+      - seccomp=unconfined
+    devices:
+      - /dev/snd
+      - /dev/kmsg
+      # Các device động sẽ được thêm qua docker-compose.override.yml
+    volumes:
+      - /sys:/sys:rw
+      - /proc/asound:/host_proc_asound:ro
+      - /proc/device-tree:/host_proc_dt:ro
+      - /etc/netplan:/etc/netplan
+      - /root/mgwp/:/root/mgwp/
+      - /dev:/dev
+      - /mnt/mmcblk0p1:/mnt/mmcblk0p1
+      - /tmp:/host_tmp 
+    ports:
+      - "80:80"
+      - "443:443"
+    command: ["/sbin/init"]

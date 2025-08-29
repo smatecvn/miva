@@ -1,0 +1,10 @@
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    eth1:
+      match:
+        name: eth1
+      dhcp4: yes
+      dhcp4-overrides:
+        route-metric: 200
