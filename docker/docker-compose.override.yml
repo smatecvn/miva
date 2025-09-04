@@ -12,7 +12,8 @@ services:
       - "/dev/i2c-3"
       - "/dev/gpiochip0"
       - "/dev/gpiochip1"
-      - "/dev/ttyS0"
+      # Do not use this device
+      #- "/dev/ttyS0" 
       - "/dev/ttyS1"
       - "/dev/ttyS2"
       - "/dev/ttyS3"
