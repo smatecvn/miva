@@ -14,6 +14,7 @@ services:
       - SYS_ADMIN
       - NET_RAW
       - SYSLOG
+      - SYS_TIME #for setup time
     security_opt:
       - seccomp=unconfined
     devices:
@@ -26,9 +27,13 @@ services:
       - /proc/device-tree:/host_proc_dt:ro
       - /etc/netplan:/etc/netplan
       - /root/mgwp/:/root/mgwp/
-      - /dev:/dev
+      #- /dev:/dev
       - /mnt/mmcblk0p1:/mnt/mmcblk0p1
-      - /tmp:/host_tmp 
+      - /tmp:/host_tmp
+      # firmware folder, for debug purpose
+      - /mnt/mgw3:/usr/lib/python3.11/site-packages/mgw3
+      # docker folder
+      - /home/miva:/home/miva 
     ports:
       - "80:80"
       - "443:443"
