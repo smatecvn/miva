@@ -11,13 +11,17 @@ cp init_4g_module.sh /usr/local/bin/init_4g_module.sh
 chmod +x /usr/local/bin/init_4g_module.sh
 cp netcfg-watcher.sh /usr/local/bin/netcfg-watcher.sh
 chmod +x /usr/local/bin/netcfg-watcher.sh
+cp mpv_init.sh /usr/local/bin/mpv_init.sh
+chmod +x /usr/local/bin/mpv_init.sh
+
 # cp setup_leds.sh /usr/local/bin/setup_leds.sh
 # chmod +x /usr/local/bin/setup_leds.sh
 #cp check_and_start_container.sh /usr/local/bin/check_and_start_container.sh
 #chmod +x /usr/local/bin/check_and_start_container.sh
 
 # Setup tools
-apt update  && apt install -y inotify-tools
+# apt update  && 
+apt install -y inotify-tools
 
 # Setup default network
 mkdir -p /root/mgwp/network
@@ -45,8 +49,9 @@ systemctl start pre-docker-gpio.service
 # systemctl enable setup-leds.service
 # systemctl start setup-leds.service
 
-# Setup crontab, monitor mira container
-#(crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/check_and_start_container.sh") | crontab -
+# Setup crontab, monitor miva container
+(crontab -l 2>/dev/null | grep -Fq "*/1 * * * * /usr/local/bin/mpv_init.sh >> /tmp/mpv_init.log 2>&1") \
+  || (crontab -l 2>/dev/null; echo "*/1 * * * * /usr/local/bin/mpv_init.sh >> /tmp/mpv_init.log 2>&1") | crontab -
 
 # Setup /dev/ttyUSB1 used for mgwp app. ModemManager use /dev/ttyUSB2 by default
 touch /etc/udev/rules.d/99-mm-ignore.rules
