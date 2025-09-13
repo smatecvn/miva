@@ -3,7 +3,7 @@ NETCFG=/root/mgwp/network/netplan.apply
 REBOOT=/root/mgwp/reboot/reboot.apply
 UPGRADE=/root/mgwp/upgrade/upgrade.tag
 WATCHERDIR=/root/mgwp
-COMPOSE_DIR=/home/mira/docker
+COMPOSE_DIR=/home/miva/docker
 
 inotifywait -m -r -e close_write "$WATCHERDIR" | while read path action file; do
   case "$file" in

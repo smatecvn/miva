@@ -10,6 +10,7 @@ MPV_LOGS_ZONE1="/tmp/zone1.log"
 MPV_LOGS_ZONE2="/tmp/zone2.log"
 MPV_LOGS_ZONE3="/tmp/zone3.log"
 DOCKER_PATH="/home/miva/docker"
+UPGRADE=/root/mgwp/upgrade/upgrade.tag
 
 # Get main screen resolution
 SCREEN_SIZE=$(DISPLAY=:0 XAUTHORITY=.Xauthority xrandr | grep '*' | awk '{print $1}')
@@ -81,13 +82,20 @@ if [ -S "$SOCKET_PATH_ZONE3" ]; then
   # Check container
   if ! docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
       echo "Container $CONTAINER_NAME does not exist -> creating new one"
+      TAG=$(cat "$UPGRADE" | tr -d ' \t\n')
+      if [ -n "$TAG" ]; then
+        echo "Detected new tag: $TAG"
+        export TAG="$TAG"
+      else 
+        echo "Not Detected new tag: $TAG"
+        export TAG=latest
+      fi
       cd $DOCKER_PATH
       docker compose up -d
   else
       # Container exists
       if ! docker ps --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
           echo "Container $CONTAINER_NAME exists but is not running -> starting"
-          export TAG=test
           docker start $CONTAINER_NAME
       else
           echo "Container $CONTAINER_NAME is already running"
