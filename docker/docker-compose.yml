@@ -31,7 +31,7 @@ services:
       - /mnt/mmcblk0p1:/mnt/mmcblk0p1
       - /tmp:/host_tmp
       # firmware folder, for debug purpose
-      - /mnt/mgw3:/usr/lib/python3.11/site-packages/mgw3
+      # - /mnt/mgw3:/usr/lib/python3.11/site-packages/mgw3
       # docker folder
       - /home/miva:/home/miva 
     ports:

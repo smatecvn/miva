@@ -76,31 +76,31 @@ sleep 3
 #     echo "mpv is already running with socket $SOCKET_PATH_ZONE0"
 # fi
 
-if [ -S "$SOCKET_PATH_ZONE3" ]; then
-  echo "Socket $SOCKET_PATH_ZONE3 exists."
+# if [ -S "$SOCKET_PATH_ZONE3" ]; then
+#   echo "Socket $SOCKET_PATH_ZONE3 exists."
 
-  # Check container
-  if ! docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-      echo "Container $CONTAINER_NAME does not exist -> creating new one"
-      TAG=$(cat "$UPGRADE" | tr -d ' \t\n')
-      if [ -n "$TAG" ]; then
-        echo "Detected new tag: $TAG"
-        export TAG="$TAG"
-      else 
-        echo "Not Detected new tag: $TAG"
-        export TAG=latest
-      fi
-      cd $DOCKER_PATH
-      docker compose up -d
-  else
-      # Container exists
-      if ! docker ps --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-          echo "Container $CONTAINER_NAME exists but is not running -> starting"
-          docker start $CONTAINER_NAME
-      else
-          echo "Container $CONTAINER_NAME is already running"
-      fi
-  fi
-else
-  echo "Socket $SOCKET_PATH_ZONE3 does not exist, container will not be started."
-fi
+#   # Check container
+#   if ! docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
+#       echo "Container $CONTAINER_NAME does not exist -> creating new one"
+#       TAG=$(cat "$UPGRADE" | tr -d ' \t\n')
+#       if [ -n "$TAG" ]; then
+#         echo "Detected new tag: $TAG"
+#         export TAG="$TAG"
+#       else 
+#         echo "Not Detected new tag: $TAG"
+#         export TAG=latest
+#       fi
+#       cd $DOCKER_PATH
+#       docker compose up -d
+#   else
+#       # Container exists
+#       if ! docker ps --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
+#           echo "Container $CONTAINER_NAME exists but is not running -> starting"
+#           docker start $CONTAINER_NAME
+#       else
+#           echo "Container $CONTAINER_NAME is already running"
+#       fi
+#   fi
+# else
+#   echo "Socket $SOCKET_PATH_ZONE3 does not exist, container will not be started."
+# fi
